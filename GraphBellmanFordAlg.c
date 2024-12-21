@@ -8,8 +8,8 @@
 
 // Student Name :
 // Student Number :
-// Student Name :
-// Student Number :
+// Student Name : Duarte Branco
+// Student Number : 119253
 
 /*** COMPLETE THE GraphBellmanFordAlgExecute FUNCTION ***/
 
@@ -18,6 +18,11 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+// INT_MAX == INF
+#include <limits.h>
+#include "SortedList.h"
+//
 
 #include "Graph.h"
 #include "IntegersStack.h"
@@ -59,14 +64,75 @@ GraphBellmanFordAlg* GraphBellmanFordAlgExecute(Graph* g,
   //
 
   // Mark all vertices as not yet visited, i.e., ZERO
-  
+  result->marked = (unsigned int*)malloc(numVertices * sizeof(unsigned int));
+  assert(result->marked != NULL);
+
   // No vertex has (yet) a (valid) predecessor
-  
+  result->predecessor = (int*)malloc(numVertices * sizeof(int));
+  assert(result->predecessor != NULL);
+
   // No vertex has (yet) a (valid) distance to the start vertex
-  
+  result->distance = (int*)malloc(numVertices * sizeof(int));
+  assert(result->distance != NULL);
+
   // THE ALGORTIHM TO BUILD THE SHORTEST-PATHS TREE
 
-  return NULL;
+  for (unsigned int i = 0; i < numVertices; i++) {
+    result->marked[i] = 0;
+    result->predecessor[i] = -1;
+    result->distance[i] = INT_MAX;
+  }
+
+  result->distance[startVertex] = 0;
+  result->marked[startVertex] = 1;
+
+  // Relax edges |V|-1 times
+  for (unsigned int i = 0; i < numVertices - 1; i++) {
+    for (unsigned int u = 0; u < numVertices; u++) {
+      unsigned int* adjacents = GraphGetAdjacentsTo(g, u);
+      if (adjacents[0] == 0 || result->distance[u] == INT_MAX) {
+        free(adjacents);
+        continue;
+      }
+      
+      for (unsigned int j = 1; j <= adjacents[0]; j++) {
+        unsigned int v = adjacents[j];
+        
+        if (result->distance[u] != INT_MAX &&
+          result->distance[u] + 1 < result->distance[v]) {
+          result->distance[v] = result->distance[u] + 1;
+          result->predecessor[v] = u;
+          result->marked[v] = 1;
+        }
+      }
+      
+      free(adjacents);
+    }
+  }
+
+  // Check for negative cycles
+  for (unsigned int u = 0; u < numVertices; u++) {
+    unsigned int* adjacents = GraphGetAdjacentsTo(g, u);
+    if (adjacents[0] == 0 || result->distance[u] == INT_MAX) {
+      free(adjacents);
+      continue;
+    }
+    
+    for (unsigned int j = 1; j <= adjacents[0]; j++) {
+      unsigned int v = adjacents[j];
+      
+      if (result->distance[u] != INT_MAX && 
+          result->distance[u] + 1 < result->distance[v]) {
+        free(adjacents);
+        GraphBellmanFordAlgDestroy(&result);
+        return NULL;
+      }
+    }
+
+    free(adjacents);
+  }
+
+  return result;
 }
 
 void GraphBellmanFordAlgDestroy(GraphBellmanFordAlg** p) {
