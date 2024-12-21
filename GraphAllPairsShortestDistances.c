@@ -36,8 +36,50 @@ GraphAllPairsShortestDistances* GraphAllPairsShortestDistancesExecute(
   assert(g != NULL);
 
   // COMPLETE THE CODE
+  unsigned int numVertices = GraphGetNumVertices(g);
 
-  return NULL;
+  // Allocate memory for the result structure
+  GraphAllPairsShortestDistances* result = (GraphAllPairsShortestDistances*)malloc(sizeof(struct _GraphAllPairsShortestDistances));
+  assert(result != NULL);
+
+  result->graph = g;
+
+  // Allocate memory for the distance matrix
+  result->distance = (int**)malloc(numVertices * sizeof(int*));
+  assert(result->distance != NULL);
+
+  for (unsigned int i = 0; i < numVertices; i++) {
+    result->distance[i] = (int*)malloc(numVertices * sizeof(int));
+    assert(result->distance[i] != NULL);
+
+    for (unsigned int j = 0; j < numVertices; j++) {
+      result->distance[i][j] = -1;
+    }
+  }
+
+  // Compute the shortest paths for each vertex
+  for (unsigned int v = 0; v < numVertices; v++) {
+    GraphBellmanFordAlg* bfResult = GraphBellmanFordAlgExecute(g, v);
+    if (bfResult == NULL) {
+      for (unsigned int i = 0; i < numVertices; i++) {
+        free(result->distance[i]);
+      }
+      free(result->distance);
+      free(result);
+      return NULL;
+    }
+
+    // Store the distances in the distance matrix
+    for (unsigned int w = 0; w < numVertices; w++) {
+      if (GraphBellmanFordAlgReached(bfResult, w)) {
+        result->distance[v][w] = GraphBellmanFordAlgDistance(bfResult, w);
+      }
+    }
+
+    GraphBellmanFordAlgDestroy(&bfResult);
+  }
+  
+  return result;
 }
 
 void GraphAllPairsShortestDistancesDestroy(GraphAllPairsShortestDistances** p) {
