@@ -18,6 +18,7 @@
 ///   a[k] = a[i] + a[j];
 /// }
 /// InstrPrint();  // to show time, calibrated time and counters
+#define _POSIX_C_SOURCE 200112L
 
 #include "instrumentation.h"
 #include <stdio.h>
@@ -37,7 +38,7 @@ double cpu_time(void) ; ///
 double cpu_time(void) {
   struct timespec current_time;
 
-  if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &current_time) != 0)  // the first argument could also be CLOCK_REALTIME
+  if (clock_gettime(CLOCK_MONOTONIC, &current_time) != 0)  // the first argument could also be CLOCK_REALTIME
     return -1.0; // clock_gettime() failed!!!
   return (double)current_time.tv_sec + 1.0e-9 * (double)current_time.tv_nsec;
 }

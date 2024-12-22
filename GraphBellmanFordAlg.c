@@ -89,6 +89,7 @@ GraphBellmanFordAlg* GraphBellmanFordAlgExecute(Graph* g,
   for (unsigned int i = 0; i < numVertices - 1; i++) {
     for (unsigned int u = 0; u < numVertices; u++) {
       unsigned int* adjacents = GraphGetAdjacentsTo(g, u);
+      InstrCount[0] += 1;
       if (adjacents[0] == 0 || result->distance[u] == INT_MAX) {
         free(adjacents);
         continue;
@@ -96,12 +97,13 @@ GraphBellmanFordAlg* GraphBellmanFordAlgExecute(Graph* g,
       
       for (unsigned int j = 1; j <= adjacents[0]; j++) {
         unsigned int v = adjacents[j];
-        
+        InstrCount[0] += 1; 
         if (result->distance[u] != INT_MAX &&
           result->distance[u] + 1 < result->distance[v]) {
           result->distance[v] = result->distance[u] + 1;
           result->predecessor[v] = u;
           result->marked[v] = 1;
+          InstrCount[1] += 1;
         }
       }
       
@@ -112,6 +114,7 @@ GraphBellmanFordAlg* GraphBellmanFordAlgExecute(Graph* g,
   // Check for negative cycles
   for (unsigned int u = 0; u < numVertices; u++) {
     unsigned int* adjacents = GraphGetAdjacentsTo(g, u);
+    InstrCount[0] += 1;
     if (adjacents[0] == 0 || result->distance[u] == INT_MAX) {
       free(adjacents);
       continue;
@@ -119,7 +122,7 @@ GraphBellmanFordAlg* GraphBellmanFordAlgExecute(Graph* g,
     
     for (unsigned int j = 1; j <= adjacents[0]; j++) {
       unsigned int v = adjacents[j];
-      
+      InstrCount[0] += 1;
       if (result->distance[u] != INT_MAX && 
           result->distance[u] + 1 < result->distance[v]) {
         free(adjacents);
