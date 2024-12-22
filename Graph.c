@@ -6,8 +6,8 @@
 // Graph - Using a list of adjacency lists representation
 //
 
-// Student Name : 
-// Student Number :
+// Student Name : Filipe Viseu
+// Student Number : 119192
 // Student Name : Duarte Branco
 // Student Number : 119253
 
@@ -139,7 +139,26 @@ Graph* GraphCreateTranspose(const Graph* g) {
 
   // COMPLETE THE CODE
 
-  return NULL;
+  Graph* transposto = GraphCreate(g->numVertices, 1, g->isWeighted); // Inicia um grafo onde o transposto irá ser guardado
+
+  List* vertices = g->verticesList; // Copia a lista de vertices do grafo original
+  ListMoveToHead(vertices); // Move o ponteiro para a cabeça da lista
+
+  for (unsigned int i = 0; i < g->numVertices; ListMoveToNext(vertices), i++) { // Percorre todos os vertices do grafo original
+    struct _Vertex* verticeAtual = ListGetCurrentItem(vertices); // Guarda o vertice atual
+    List* arestas = verticeAtual->edgesList; // Copia a lista de arestas do vertice atual
+    ListMoveToHead(arestas); // Move o ponteiro para a cabeça da lista
+    for (unsigned int j = 0; j < verticeAtual->outDegree; ListMoveToNext(arestas), j++) { // Percorre todas as arestas do vertice atual
+      struct _Edge* arestaAtual = ListGetCurrentItem(arestas); // Guarda a aresta atual
+      if (g->isWeighted) { // Se o grafo tiver distancias
+        GraphAddWeightedEdge(transposto, arestaAtual->adjVertex, i, arestaAtual->weight);
+      } else {
+        GraphAddEdge(transposto, arestaAtual->adjVertex, i);
+      }
+    }
+  }
+
+  return transposto;
 }
 
 void GraphDestroy(Graph** p) {

@@ -59,6 +59,7 @@
   "files.associations": {
     "*.m": "matlab",
     "assert.h": "c",
-    "integersstack.h": "c"
+    "integersstack.h": "c",
+    "graphbellmanfordalg.h": "c"
   }
 }

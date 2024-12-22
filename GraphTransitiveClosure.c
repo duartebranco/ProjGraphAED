@@ -6,10 +6,10 @@
 // GraphTransitiveClosure - Transitive Closure of a directed graph
 //
 
-// Student Name :
-// Student Number :
-// Student Name :
-// Student Number :
+// Student Name : Filipe Viseu
+// Student Number : 119192
+// Student Name : Duarte Branco
+// Student Number : 119253
 
 /*** COMPLETE THE GraphComputeTransitiveClosure FUNCTION ***/
 
@@ -32,6 +32,20 @@ Graph* GraphComputeTransitiveClosure(Graph* g) {
   assert(GraphIsWeighted(g) == 0);
 
   // COMPLETE THE CODE
+  unsigned int numVertices = GraphGetNumVertices(g); // Obtem o numero de vertices do grafo original
+  Graph* fechoTransitivo =  GraphCreate(numVertices, 1, 0);// Cria o grafo onde o transitivo vai ser guardado
 
-  return NULL;
+  for (unsigned int u = 0; u < numVertices; u++) { // Para cada vertice do grafo original
+    GraphBellmanFordAlg* bellMan = GraphBellmanFordAlgExecute(g, u); // Executa o algoritmo de Bellman-Ford
+    for (unsigned int v = 0; v < numVertices; v++) { // Para cada vertice do grafo original
+      if (u != v && GraphBellmanFordAlgReached(bellMan, v)) { // Se o vertice v é alcançável a partir do vertice u (têm que ser diferentes)
+        GraphAddEdge(fechoTransitivo, u, v); // Adiciona uma aresta do vertice u para o vertice v no grafo transposto
+      }
+    }
+    GraphBellmanFordAlgDestroy(&bellMan); // Destroi a estrutura do algoritmo de Bellman-Ford
+  }
+
+  return fechoTransitivo;
 }
+
+// Complexidade:O(V^2*E)

@@ -1,0 +1,44 @@
+# export INSTRCTU=0.637  # (To bypass calibration)
+Testing dig02 with 5 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.000020        0.000031             585              20
+
+Testing dig02 with 10 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.000185        0.000290            9595              90
+
+Testing dig02 with 15 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.000849        0.001334           49155             210
+
+Testing dig02 with 20 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.002483        0.003900          156390             380
+
+Testing dig02 with 25 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.005469        0.008592          383425             600
+
+Testing dig02 with 30 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.011815        0.018561          797385             870
+
+Testing dig02 with 35 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.020276        0.031852         1480395            1190
+
+Testing dig02 with 40 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.034444        0.054108         2529580            1560
+
+Testing dig02 with 45 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.056073        0.088087         4057065            1980
+
+Testing dig02 with 50 vertices:
+#          time         caltime   V processados   A adicionadas
+       0.081778        0.128467         6189975            2450
+
+Testing dig03 from file:
+#          time         caltime   V processados   A adicionadas
+       0.000254        0.000399            5893             131
