@@ -21,9 +21,8 @@
 
 // INT_MAX == INF
 #include <limits.h>
-#include "SortedList.h"
-//
 
+#include "SortedList.h"
 #include "Graph.h"
 #include "IntegersStack.h"
 #include "instrumentation.h"
