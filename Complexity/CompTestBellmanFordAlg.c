@@ -1,6 +1,8 @@
 // Complexity BellmanFordAlg Test
-// Compile it:
-// gcc -o CompTestBellmanFordAlg CompTestBellmanFordAlg.c Graph.c GraphBellmanFordAlg.c instrumentation.c SortedList.c IntegersStack.c -I.
+// Compile it from root:
+// gcc -o CompTestBellmanFordAlg Complexity/CompTestBellmanFordAlg.c Graph.c GraphBellmanFordAlg.c instrumentation.c SortedList.c IntegersStack.c -I.
+// Run it: 
+// ./CompTestBellmanFordAlg
 
 #include <assert.h>
 #include <stdio.h>
@@ -48,7 +50,7 @@ int main(void) {
   GraphDestroy(&g01);
 
   // Test dig03 from file
-  FILE* file = fopen("DG_2.txt", "r");
+  FILE* file = fopen("Graphs/DG_2.txt", "r");
   Graph* dig03 = GraphFromFile(file);
   fclose(file);
   printf("Testing dig03:\n");

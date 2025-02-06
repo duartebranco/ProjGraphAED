@@ -1,4 +1,8 @@
-// Compilar: gcc -o CompTestTransitiveClosure CompTestTransitiveClosure.c Graph.c GraphTransitiveClosure.c GraphBellmanFordAlg.c instrumentation.c SortedList.c IntegersStack.c -I.
+// Complexity Transitive Closure Test
+// Compile it from root:
+// gcc -o CompTestTransitiveClosure Complexity/CompTestTransitiveClosure.c Graph.c GraphTransitiveClosure.c GraphBellmanFordAlg.c instrumentation.c SortedList.c IntegersStack.c -I.
+// Run it: 
+// ./CompTestBellmanFordAlg
 
 #include <assert.h>
 #include <stdio.h>
@@ -54,7 +58,7 @@ int main(void) {
     }
 
     printf("\nTesting dig03 from file:\n");
-    FILE* file = fopen("DG_2.txt", "r");
+    FILE* file = fopen("Graphs/DG_2.txt", "r");
     Graph* dig03 = GraphFromFile(file);
     fclose(file);
     test_transitive_closure(dig03);
