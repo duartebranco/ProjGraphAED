@@ -20,7 +20,9 @@ This project implements various graph algorithms and provides tests to verify th
 - **IntegersStack**: Implementation of a stack data structure for integers.
 - **SortedList**: Implementation of a sorted list data structure.
 
-It also includes the source code of the Project's Report in LaTeX.
+There's a folder dedicated to the computacional complexity of the Bellman-Ford and Transitive Closure algorithms - **/Complexity**
+
+Another folder includes the source code of the Project's Report in LaTeX - **/Report_PT**
 
 ## Compilation
 
